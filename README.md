@@ -28,3 +28,5 @@ La aplicación de los principios SOLID transformó por completo la testeabilidad
 * **SRP:** Separar la configuración (`config.py`) del registro de datos (`recorder.py`) evitó que un error de escritura de archivo afectara la lógica de comunicación.
 * **OCP e ISP:** Crear la abstracción `MessageParser` permite agregar nuevos protocolos (como CAN o I2C) sin modificar el código existente.
 * **LSP y DIP:** Al inyectar el parser y la configuración en `UartDevice`, el hardware simulado ya no depende de implementaciones concretas. Esto permitió crear pruebas unitarias rápidas y 100% aisladas utilizando el patrón de diseño Mock y repositorios en memoria.
+## Resultados Finales
+Se logró un 100% de cobertura en el driver UART moderno tras aplicar técnicas TDG con GitHub Copilot.
