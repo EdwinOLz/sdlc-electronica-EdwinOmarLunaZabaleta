@@ -1,15 +1,13 @@
 from enum import Enum, auto
 
-
 class TrafficLightState(Enum):
     RED = auto()
     YELLOW = auto()
     GREEN = auto()
 
-
 class TrafficLightFSM:
-    """Máquina de estados simple para un semáforo."""
-
+    """El estado vive dentro del objeto, no en una variable global."""
+    
     def __init__(self) -> None:
         self._state = TrafficLightState.RED
         self._cycle_count = 0

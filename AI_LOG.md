@@ -28,3 +28,10 @@
 *   **Sugerencia de la IA:** Copilot generó las pruebas con la sintaxis correcta. Para el test de DIP, instanció el repositorio falso en memoria, lo inyectó en el procesador y verificó que el objeto inmutable `SensorReading` se almacenara y recuperara correctamente.
 *   **Mi decisión:** Acepté la generación porque las pruebas validan exitosamente que el código está desacoplado de dependencias concretas y de interfaces infladas.
 *   **Reflexión:** Este ejercicio me demostró el valor real de DIP a la hora de hacer pruebas. Al depender de una abstracción (`Protocol`), pude engañar al `DataProcessor` inyectándole una base de datos falsa (`InMemoryRepository`) en lugar de tener que configurar una conexión real a PostgreSQL. Esto hace que mis pruebas corran en milisegundos y sean 100% confiables.
+
+### Entrada 5 - Día 5: Ejercicio Integrador "El Driver Modernizado" (TDG)
+*   **Herramientas usadas:** GitHub Copilot.
+*   **Prompt/Situación:** Apliqué Test-Driven Generation (TDG). Escribí únicamente las firmas de las funciones y los docstrings detallados para las pruebas de `config`, `parsers`, `device` y `recorder`, dejando que el agente autocompletara la implementación.
+*   **Sugerencia de la IA:** Copilot generó implementaciones muy precisas. Utilizó `pytest.raises` para verificar el manejo de errores (como el `FrozenInstanceError` en el config y `RuntimeError` en el dispositivo) y `tmp_path` de pytest para aislar las pruebas de escritura de archivos JSON.
+*   **Mi decisión:** Acepté las sugerencias casi en su totalidad. El único cambio que realicé manualmente fue corregir la sintaxis de las aserciones booleanas en los parsers (cambiando `assert algo == True` por `assert algo`), siguiendo las advertencias del linter `ruff` para cumplir con PEP 8.
+*   **Reflexión:** Escribir primero el docstring me forzó a pensar en el comportamiento esperado, en lugar de perderme escribiendo líneas repetitivas de código. Dividir el driver monolítico con SOLID permitió que cada clase fuera probada de forma 100% aislada.
