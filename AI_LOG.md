@@ -35,3 +35,18 @@
 *   **Sugerencia de la IA:** Copilot generó implementaciones muy precisas. Utilizó `pytest.raises` para verificar el manejo de errores (como el `FrozenInstanceError` en el config y `RuntimeError` en el dispositivo) y `tmp_path` de pytest para aislar las pruebas de escritura de archivos JSON.
 *   **Mi decisión:** Acepté las sugerencias casi en su totalidad. El único cambio que realicé manualmente fue corregir la sintaxis de las aserciones booleanas en los parsers (cambiando `assert algo == True` por `assert algo`), siguiendo las advertencias del linter `ruff` para cumplir con PEP 8.
 *   **Reflexión:** Escribir primero el docstring me forzó a pensar en el comportamiento esperado, en lugar de perderme escribiendo líneas repetitivas de código. Dividir el driver monolítico con SOLID permitió que cada clase fuera probada de forma 100% aislada.
+
+## Semana 2 
+### Entrada 1: Auditoría de Historias de Usuario con IA
+
+**Prompt:** "IA como crítica: audita mis Gherkin para US-01 (Registrar lectura) y US-02 (Alerta de problema). ¿Es verificable? ¿es ambiguo? ¿qué caso borde falta? También revisa mis dudas sobre la complejidad y el SRP."
+
+**Qué produjo la IA:**
+La IA señaló aciertos y varios defectos críticos en la redacción orientada a pruebas (TDD):
+1. Para US-01: Sugirió separar la historia de "guardar datos" de la de "consultar historiales" y detectó la falta de casos borde para datos físicamente imposibles (ej. -500 C) y payloads malformados.
+2. Para US-02: Encontró un paso no programable/inverificable ("And puedo atender un posible problema"). 
+3. Detectó falta de manejo de histéresis/rebotes en US-02 (señales que oscilan justo en el límite del threshold).
+4. Me ayudó a aclarar cómo aplicar SRP: la US-02 no debe preocuparse de verificar si el sensor existe, porque de eso ya se encargó la capa anterior (US-01).
+
+**Reflexión:**
+me parecen muy acertadas las siguerencias realizadas por la IA ya que contempla casos que yo habia ignorado asi como tambien me hizo notar errores en mi Gherkin como casos no programables los cuales no note por mi cuenta y me ayudo a resolver mis dudas con el principio de responsabilidad unica o srp que podia llevarme a generar codigo caotico ignorando totalmente este principio por no separar modulos
