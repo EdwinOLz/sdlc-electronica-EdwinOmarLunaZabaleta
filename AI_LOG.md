@@ -50,3 +50,17 @@ La IA señaló aciertos y varios defectos críticos en la redacción orientada a
 
 **Reflexión:**
 me parecen muy acertadas las siguerencias realizadas por la IA ya que contempla casos que yo habia ignorado asi como tambien me hizo notar errores en mi Gherkin como casos no programables los cuales no note por mi cuenta y me ayudo a resolver mis dudas con el principio de responsabilidad unica o srp que podia llevarme a generar codigo caotico ignorando totalmente este principio por no separar modulos
+
+### Entrada 2: Implementación de SensorRegistry con TDD
+
+**Prompt:** "Necesito mejorar este archivo junto con los test de test_SensorRegistry ya que se necesitan generar la parte de refactor siguiendo la metodologia TDD... la idea es implementar un sensor registry que pase las pruebas y aparte sea funcional..."
+
+**Qué produjo la IA:**
+Copilot generó una implementación completa de golpe. Reemplazó el stub inicial por métodos de `register`, `get` y `history`. Agregó validaciones de tipo, generación de timestamps usando `datetime`, y escribió tres tests completos de integración para probar todo el flujo. Decidió usar diccionarios puros (`dict`) para almacenar las lecturas.
+
+**Mi decisión y por qué:**
+Rechacé la implementación directa (solo tomaré inspiración de los tests). 
+1. **Violación de TDD:** Copilot generó todo el código de producción y los tests en un solo paso, rompiendo el flujo estricto de Red-Green-Refactor y los commits requeridos.
+2. **Mal Diseño:** Utilizó diccionarios en lugar de instanciar la clase `SensorReading` (dataclass) que exige la arquitectura, perdiendo las ventajas del tipado estático (Type Hints) practicado en la Semana 1.
+3. **Violación de SRP:** Puso la responsabilidad de generar el timestamp dentro del repositorio de almacenamiento, cuando esto debería venir desde la lectura del sensor. 
+Prefiero desarmar su sugerencia y reescribir los tests uno por uno para mantener el control del diseño.
