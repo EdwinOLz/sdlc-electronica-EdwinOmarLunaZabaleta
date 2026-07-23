@@ -1,4 +1,6 @@
 import pytest
+from SensorRegistry import SensorRegistry, SensorNotFoundError
+
 
 def test_get_unknown_sensor_raises():
     registry = SensorRegistry()
