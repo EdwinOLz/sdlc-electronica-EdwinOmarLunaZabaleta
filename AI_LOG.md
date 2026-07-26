@@ -64,3 +64,15 @@ Rechacé la implementación directa (solo tomaré inspiración de los tests).
 2. **Mal Diseño:** Utilizó diccionarios en lugar de instanciar la clase `SensorReading` (dataclass) que exige la arquitectura, perdiendo las ventajas del tipado estático (Type Hints) practicado en la Semana 1.
 3. **Violación de SRP:** Puso la responsabilidad de generar el timestamp dentro del repositorio de almacenamiento, cuando esto debería venir desde la lectura del sensor. 
 Prefiero desarmar su sugerencia y reescribir los tests uno por uno para mantener el control del diseño.
+### Entrada 3: Evaluación 1 - Generación de TDD para SensorReading
+* **Fecha:** 25 de Julio de 2026
+* **Herramienta:** GitHub Copilot
+* **Prompt:** "Actúa como un desarrollador Python experto. Necesito implementar la primera historia de usuario de mi sistema IoT usando TDD estricto. La historia es: 'Como analista, quiero registrar lecturas de temperatura y humedad'..."
+* **Evaluación del código:** Copilot generó correctamente la estructura de la `dataclass` y las pruebas parametrizadas en `pytest`. Sin embargo, el código fue rechazado inicialmente porque no cumplía con los estándares de calidad del proyecto.
+* **Acción tomada:** Se aceptó la lógica base, pero modifiqué manualmente los archivos para agregar `-> None` y tipado `Any` en los parámetros de los tests para que pasaran las reglas estrictas de `mypy`.
+### Entrada 4: Evaluación 1 - Implementación del Patrón Strategy
+* **Fecha:** 25 de Julio de 2026
+* **Herramienta:** GitHub Copilot
+* **Prompt:** "Actúa como un arquitecto de software Python. Necesito implementar las historias US-03 y US-04 usando TDD y el Patrón de Diseño Strategy..."
+* **Evaluación del código:** Copilot demostró un excelente manejo de la librería `unittest.mock`, aislando exitosamente las pruebas de las estrategias de alerta. Aplicó correctamente las clases abstractas (`ABC`).
+* **Acción tomada:** Se integró el código corrigiendo las firmas de las funciones de prueba (`-> None`) y formateando las importaciones para cumplir con las validaciones estrictas de Ruff y Mypy.
