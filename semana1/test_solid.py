@@ -1,4 +1,6 @@
-from semana1.solid_srp_ocp_lsp import SensorReading, AnomalyDetector
+from semana1.solid_srp_ocp_lsp import AnomalyDetector, SensorReading
+
+
 class FakeAlert:
     def __init__(self):
         self.messages = []

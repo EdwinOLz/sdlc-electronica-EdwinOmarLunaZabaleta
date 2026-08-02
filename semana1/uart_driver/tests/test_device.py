@@ -1,7 +1,9 @@
-from semana1.uart_driver.config import UartConfig
-from semana1.uart_driver.parsers import NMEAParser
-from semana1.uart_driver.device import UartDevice
 import pytest
+
+from semana1.uart_driver.config import UartConfig
+from semana1.uart_driver.device import UartDevice
+from semana1.uart_driver.parsers import NMEAParser
+
 
 def test_uart_device_levanta_error_si_no_conectado():
     """Verifica que llamar a read_and_parse levante un RuntimeError si el dispositivo no está conectado."""

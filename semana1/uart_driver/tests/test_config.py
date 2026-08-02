@@ -1,6 +1,9 @@
-from semana1.uart_driver.config import UartConfig
-import pytest
 from dataclasses import FrozenInstanceError
+
+import pytest
+
+from semana1.uart_driver.config import UartConfig
+
 
 def test_uart_config_baudrate_invalido():
     """Verifica que instanciar UartConfig con 1200 baudios levante un ValueError."""

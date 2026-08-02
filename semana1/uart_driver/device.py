@@ -1,6 +1,7 @@
 from semana1.uart_driver.config import UartConfig
 from semana1.uart_driver.parsers import MessageParser
 
+
 class UartDevice:
     def __init__(self, config: UartConfig, parser: MessageParser) -> None:
         self._config = config

@@ -1,7 +1,8 @@
+from collections.abc import Generator
 from datetime import datetime
 
 from sqlalchemy import create_engine
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, sessionmaker
+from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column, sessionmaker
 
 #Puerto de comunicación físico hacia el archivo SQLite
 engine = create_engine("sqlite:///sensorhub.db")
@@ -22,3 +23,11 @@ class ReadingModel(Base):
     value: Mapped[float]
     unit: Mapped[str]
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
+
+def get_db() -> Generator[Session, None, None]:
+    """Generador para inyectar la sesión de base de datos en FastAPI."""
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

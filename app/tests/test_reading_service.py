@@ -13,16 +13,36 @@ class FakeReadingRepository:
     def add(self, sensor_id: str, value: float, unit: str) -> ReadingModel:
         reading = ReadingModel(
             id=self._id_counter, 
-            sensor_id=sensor_id,
-            value=value,
-            unit=unit)
-        
+            sensor_id=sensor_id, 
+            value=value, 
+            unit=unit,
+            created_at=datetime.utcnow()  # <- Esto soluciona el error
+        )
         self.readings.append(reading)
         self._id_counter += 1
         return reading
         
-    def list_for_sensor(self, sensor_id: str) -> list[ReadingModel]:
-        return [r for r in self.readings if r.sensor_id == sensor_id]
+    def list_for_sensor(self, sensor_id: str,
+                         limit: int = 50, offset: int = 0) -> list[ReadingModel]:
+        resultados = [r for r in self.readings if r.sensor_id == sensor_id]
+        return resultados[offset : offset + limit]
+
+    def get_by_id(self, reading_id: int) -> ReadingModel | None:
+        return next((r for r in self.readings if r.id == reading_id), None)
+
+    def update(self, reading_id: int, data: dict) -> ReadingModel | None:
+        reading = self.get_by_id(reading_id)
+        if reading:
+            for k, v in data.items():
+                setattr(reading, k, v)
+        return reading
+
+    def delete(self, reading_id: int) -> bool:
+        reading = self.get_by_id(reading_id)
+        if reading:
+            self.readings.remove(reading)
+            return True
+        return False
 
 #Tests Unitarios
 
