@@ -1,5 +1,7 @@
-from semana1.uart_driver.recorder import DataRecorder
 import json
+
+from semana1.uart_driver.recorder import DataRecorder
+
 
 def test_data_recorder_escribe_json_line(tmp_path):
     """Verifica que DataRecorder escriba un diccionario como una línea JSON en el archivo de texto temporal generado por tmp_path."""
@@ -14,6 +16,6 @@ def test_data_recorder_escribe_json_line(tmp_path):
     recorder.record(data)
 
     # Leer el contenido del archivo y verificar que sea una línea JSON válida
-    with open(file_path, "r", encoding="utf-8") as f:
+    with open(file_path, encoding="utf-8") as f:
         line = f.readline().strip()
         assert line == json.dumps(data)

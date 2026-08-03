@@ -1,5 +1,6 @@
 from semana1.uart_driver.parsers import ModbusParser, NMEAParser
 
+
 def test_modbus_parser_reconoce_frame_valido():
     """Verifica que ModbusParser devuelva True en can_parse para un frame de bytes de tamaño 4 o mayor."""
     parser = ModbusParser()
