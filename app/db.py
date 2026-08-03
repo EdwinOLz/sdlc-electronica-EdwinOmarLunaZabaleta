@@ -1,5 +1,5 @@
 from collections.abc import Generator
-from datetime import datetime
+from datetime import datetime, timezone
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column, sessionmaker
@@ -22,7 +22,9 @@ class ReadingModel(Base):
     sensor_id: Mapped[str] = mapped_column(index=True)
     value: Mapped[float]
     unit: Mapped[str]
-    created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(
+       default=lambda: datetime.now(timezone.utc)
+    )
 
 def get_db() -> Generator[Session, None, None]:
     """Generador para inyectar la sesión de base de datos en FastAPI."""

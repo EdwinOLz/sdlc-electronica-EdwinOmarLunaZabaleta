@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 import pytest
 
 from app.db import ReadingModel
@@ -16,7 +18,7 @@ class FakeReadingRepository:
             sensor_id=sensor_id, 
             value=value, 
             unit=unit,
-            created_at=datetime.utcnow()  # <- Esto soluciona el error
+            created_at=datetime.now(timezone.utc)
         )
         self.readings.append(reading)
         self._id_counter += 1

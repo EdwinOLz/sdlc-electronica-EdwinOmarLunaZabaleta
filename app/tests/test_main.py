@@ -31,7 +31,7 @@ def test_create_invalid_reading_absolute_zero() -> None:
         json={"value": -300.0, "unit": "C"}
     )
     # Debe ser atrapado y devuelto como Unprocessable Entity
-    assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+    assert response.status_code == status.HTTP_422_UNPROCESSABLE_CONTENT
     assert "cero absoluto" in response.json()["detail"]
 
 def test_list_readings_empty() -> None:

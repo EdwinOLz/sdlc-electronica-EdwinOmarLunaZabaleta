@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Annotated, Any
 
 from fastapi import Depends, FastAPI, HTTPException, status
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy.orm import Session
 
 from app.db import get_db
@@ -23,8 +23,7 @@ class ReadingOut(BaseModel):
     unit: str
     created_at: datetime
     
-    class Config:
-        from_attributes = True  #Permite convertir a JSON automáticamente
+    model_config = ConfigDict(from_attributes=True)
 
 class ReadingUpdate(BaseModel):
     value: float | None = None
@@ -51,8 +50,9 @@ def create_reading(
         reading.value, reading.unit)
     except ValueError as e:
         # Si la física falla, lanzamos el código 422 (Unprocessable Entity)
-        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-        detail=str(e)) from e
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, 
+            detail=str(e)) from e
 
 @app.get("/sensors/{sensor_id}/readings",
          response_model=list[ReadingOut],
