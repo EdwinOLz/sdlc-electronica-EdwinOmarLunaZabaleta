@@ -24,9 +24,10 @@ class SQLAlchemyReadingRepository:
         limit: int = 50,
         offset: int = 0) -> list[ReadingModel]:
 
-        stmt = select(ReadingModel).where(
-            ReadingModel.sensor_id == sensor_id
-        ).offset(offset).limit(limit)
+        stmt = select(ReadingModel).where(ReadingModel.sensor_id == sensor_id)
+        
+        stmt = stmt.order_by(ReadingModel.created_at.desc()).offset(offset).limit(limit)
+        
         return list(self._session.scalars(stmt).all())
 
     def get_by_id(self, reading_id: int) -> ReadingModel | None:
@@ -44,7 +45,6 @@ class SQLAlchemyReadingRepository:
     def delete(self, reading_id: int) -> bool:
         reading = self.get_by_id(reading_id)
         if reading:
-            # En producción se recomienda desactivar, pero para el CRUD base lo borramos
             self._session.delete(reading)
             self._session.commit()
             return True
