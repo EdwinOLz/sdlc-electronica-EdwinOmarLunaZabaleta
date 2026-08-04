@@ -1,7 +1,8 @@
 from fastapi import status
 from fastapi.testclient import TestClient
 
-from app.main import app, get_reading_service
+from app.main import app
+from app.routers.readings import get_reading_service
 from app.services.reading_service import ReadingService
 from app.tests.test_reading_service import FakeReadingRepository
 
@@ -25,14 +26,17 @@ def test_create_valid_reading() -> None:
     assert data["sensor_id"] == "TEMP-01"
     assert data["value"] == 25.0
 
-def test_create_invalid_reading_absolute_zero() -> None:
+def test_create_invalid_reading_absolute_zero() -> None: 
     response = client.post(
-        "/sensors/TEMP-01/readings", 
+        "/sensors/TEMP-01/readings",
         json={"value": -300.0, "unit": "C"}
     )
-    # Debe ser atrapado y devuelto como Unprocessable Entity
+    
     assert response.status_code == status.HTTP_422_UNPROCESSABLE_CONTENT
-    assert "cero absoluto" in response.json()["detail"]
+        
+    error_detail = response.json()["detail"][0]
+    assert error_detail["loc"] == ["body", "value"]
+    assert error_detail["type"] == "greater_than_equal"
 
 def test_list_readings_empty() -> None:
     response = client.get("/sensors/TEMP-02/readings")
